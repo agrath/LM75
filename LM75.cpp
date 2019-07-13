@@ -109,5 +109,18 @@ boolean LM75::shutdown () {
 }
 
 void LM75::shutdown (boolean val) {
-  conf(val << LM75_CONF_SHUTDOWN);
+  //overwrite all conf with this value
+  //conf(val << LM75_CONF_SHUTDOWN);
+  
+  //merge conf
+  byte old;
+  old = conf();
+  if(val)
+  {
+  	conf(old | (1<<LM75_CONF_SHUTDOWN));
+  }
+  else
+  {
+  	conf(old & ~(1<<LM75_CONF_SHUTDOWN));
+  }
 }
