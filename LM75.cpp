@@ -117,10 +117,15 @@ void LM75::shutdown (boolean val) {
   old = conf();
   if(val)
   {
+    //sleep
   	conf(old | (1<<LM75_CONF_SHUTDOWN));
   }
   else
   {
+    //wake
   	conf(old & ~(1<<LM75_CONF_SHUTDOWN));
+    //on NXP LM75A && TI LM75B, sensor does not update temperature
+    //https://github.com/thefekete/LM75/issues/3
+    delay(100);
   }
 }
